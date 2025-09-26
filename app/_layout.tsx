@@ -2,11 +2,12 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { Stack } from 'expo-router';
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useFonts } from 'expo-font';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -15,29 +16,34 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [ready, setReady] = useState(false);
+  // const [ready, setReady] = useState(false);
+  const [fontsLoaded] = useFonts({
+    Inter: require('@/assets/fonts/Inter-VariableFont.ttf'),
+    OpenSans: require('@/assets/fonts/OpenSans-VariableFont.ttf'),
+    Montserrat: require('@/assets/fonts/Montserrat-VariableFont.ttf'),
+  });
   const colorScheme = useColorScheme();
 
   //Preload fonts and assets etc.
-  useEffect(() => {
-    (async () => {
-      try {
-        setTimeout(() => {
-          console.log("This runs after 2 seconds!");
-        }, 2000); 
-      } finally {
-        setReady(true);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       setTimeout(() => {
+  //         console.log("This runs after 2 seconds!");
+  //       }, 2000); 
+  //     } finally {
+  //       setReady(true);
+  //     }
+  //   })();
+  // }, []);
 
   const onLayout = useCallback(() => {
-    if (ready) {
+    if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [ready]);
+  }, [fontsLoaded]);
 
-  if (!ready) return null;
+  if (!fontsLoaded) return null;
 
 
   return (

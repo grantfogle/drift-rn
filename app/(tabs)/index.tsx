@@ -1,11 +1,10 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
 import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { Image } from 'expo-image';
 import { Link } from 'expo-router';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   return (
@@ -17,6 +16,11 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
+        <View style={{ padding: 16 }}>
+            <Text style={{ fontFamily: 'Inter', fontSize: 20, fontWeight: 600 }}>Welcome to the app</Text>
+            <Text style={{ fontFamily: 'OpenSans', fontSize: 20 }}>Welcome to the app</Text>
+            <Text style={{ fontFamily: 'Montserrat', fontSize: 20 }}>Welcome to the app</Text>
+          </View>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />

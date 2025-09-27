@@ -1,9 +1,9 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { ThemedButton } from '@/components/ui/themed-button';
 import { useAuth } from '@/providers/auth';
 import { useTheme } from '@/theme';
 import { router } from 'expo-router';
-import { Button } from 'react-native';
 
 export default function SignInScreen() {
     const { signIn } = useAuth();
@@ -29,7 +29,12 @@ export default function SignInScreen() {
                 darkColor={colors.primary}>
                     Welcome to Drift
             </ThemedText>
-            <Button title="Sign In" onPress={handleSignIn} />
+            <ThemedButton
+                type="form"
+                color="primary"
+                title="Sign in"
+                onPress={handleSignIn}
+                />
             {/* <Button title="Sign Up" onPress={handleSignUpSelect} /> */}
         </ThemedView>
     );

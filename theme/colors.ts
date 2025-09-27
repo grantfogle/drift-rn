@@ -42,6 +42,7 @@ export const palette = {
     success:  palette.success500,
     warning:  palette.warning500,
     danger:   palette.danger500,
+    text:     palette.gray900
   };
   
   export const darkColors = {
@@ -56,5 +57,6 @@ export const palette = {
     success:  palette.success500,
     warning:  palette.warning500,
     danger:   palette.danger500,
+    text:     palette.gray50
   };
   

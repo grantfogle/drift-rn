@@ -1,11 +1,13 @@
-import { StyleSheet, Text, type TextProps } from 'react-native';
-
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { useTheme } from '@/theme';
+import { StyleSheet, Text, type TextProps } from 'react-native';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?: 'default' | 'title' | 'subtitle' | 'body' | 'link' | 'caption';
+  weight?: 'regular' | 'medium' | 'semibold' | 'bold';
+  family?: 'default' | 'brand' | 'ui';
 };
 
 export function ThemedText({
@@ -13,48 +15,50 @@ export function ThemedText({
   lightColor,
   darkColor,
   type = 'default',
+  weight = 'regular',
+  family = 'default',
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const { type: t, fonts, colors } = useTheme();
+
+  const presetByType = {
+    default: t.body,
+    body: t.body,
+    title: t.h1,
+    subtitle: t.h3,
+    caption: t.small,
+    link: t.body
+  } as const;
+
+  const preset = presetByType[type] ?? t.body; // <- fallback
+  // TODO what does using as const do?
+
+  const weightMap = {
+    regular: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+  } as const;
+
+  const baseStyle = {
+    color: type === 'link' ? colors.primary : color,
+    fontFamily: fonts[family],
+    fontSize: preset.fontSize,
+    lineHeight: preset.lineHeight,
+    // letterSpacing: presetByType[type].letterSpacing ?? 0,
+    fontWeight: weightMap[weight],
+  } as const;
 
   return (
-    <Text
-      style={[
-        { color },
-        type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
-        style,
-      ]}
+    <Text style={[baseStyle, type === 'link' && styles.linkReset, style]}
       {...rest}
     />
   );
 }
 
 const styles = StyleSheet.create({
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: '#0a7ea4',
-  },
+  linkReset: {
+    textDecorationLine: 'underline'
+  }
 });

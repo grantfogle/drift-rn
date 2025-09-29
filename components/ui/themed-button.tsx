@@ -1,10 +1,10 @@
 import { useTheme } from '@/theme';
 import {
-    Pressable,
-    StyleSheet,
-    View,
-    type PressableProps,
-    type ViewStyle
+  Pressable,
+  StyleSheet,
+  View,
+  type PressableProps,
+  type ViewStyle
 } from 'react-native';
 import { ThemedText } from '../themed-text';
 

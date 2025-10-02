@@ -1,16 +1,20 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import Divider from '@/components/ui/divider';
+import { Input } from '@/components/ui/form/input';
 import { ThemedButton } from '@/components/ui/themed-button';
 import { useAuth } from '@/providers/auth';
 import { useTheme } from '@/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
+import { useState } from 'react';
 
 
 export default function SignInScreen() {
     const { signIn } = useAuth();
     const { colors } = useTheme();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     async function handleSignIn() {
         await signIn();
@@ -33,6 +37,13 @@ export default function SignInScreen() {
                 darkColor={colors.primary}>
                     Log in
             </ThemedText>
+
+            <Input 
+                label="Email"
+                value={email}
+                placeholder="Email"
+                onChangeText={setEmail}
+                 />
 
             <ThemedButton
                 type="form"

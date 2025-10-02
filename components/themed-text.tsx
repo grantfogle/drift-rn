@@ -12,6 +12,7 @@ export type ThemedTextProps = TextProps & {
 
 export function ThemedText({
   style,
+  // consolidate into just a color props
   lightColor,
   darkColor,
   type = 'default',
